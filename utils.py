@@ -5,12 +5,14 @@ from tensorflow.keras.models import load_model
 from mtcnn import MTCNN
 import streamlit as st
 
-
+# Use Streamlit's cache to load the model just once.
+# This prevents reloading the model every time the app re-runs.
 @st.cache_resource
 def load_detection_model():
     """Loads the pre-trained Keras model from the 'cnn_model.h5' file."""
     try:
         model = load_model('cnn_model.h5')
+        model.summary()
         return model
     except Exception as e:
         st.error(f"Error: Could not load the model. Please ensure 'cnn_model.h5' is in the same directory. Details: {e}")
@@ -20,7 +22,7 @@ def detect_and_crop_face(img_cv):
     """
     Detects and crops a face from an image using MTCNN.
     Returns the cropped face (resized to 128x128) and a boolean indicating
-    
+    whether a face was successfully detected.
     """
     detector = MTCNN()
     results = detector.detect_faces(img_cv)
