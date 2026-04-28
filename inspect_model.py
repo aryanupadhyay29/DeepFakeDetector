@@ -1,7 +1,8 @@
 import tensorflow as tf
 import os
 
-# Define the path to your .h5 file
+
+
 model_path = 'cnn_model.h5'
 
 # Check if the file exists before trying to load it
